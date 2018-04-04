@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseNotFound
 from django.views.decorators.csrf import csrf_exempt
 
 # Create your views here.
@@ -23,6 +23,6 @@ def pages(request, numero):
 		g.save()
 	try:
 		page = Pages.objects.get(id=int(numero))
-	except Grupo.DoesNotExist:
-		return HttpResponse("no existe")
+	except Pages.DoesNotExist:
+		return HttpResponseNotFound('<h1>' + numero + ' not found.</h1>')
 	return HttpResponse(page.name + " " + str(page.page))
